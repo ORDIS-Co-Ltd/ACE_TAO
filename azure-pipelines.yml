@@ -319,9 +319,9 @@ jobs:
     displayName: Set QTDIR environment variable
   - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
     displayName: git clone MPC
-  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(TAO_ROOT)/TAO_ACE.mwc -workers 4
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(TAO_ROOT)/TAO_ACE.mwc -workers 4 -use_env
     displayName: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
-  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(ACE_ROOT)/tests/tests.mwc -workers 4
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(ACE_ROOT)/tests/tests.mwc -workers 4 -use_env
     displayName: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
   - bash: make -j 6 -C TAO
     displayName: Build TAO project
@@ -343,9 +343,9 @@ jobs:
     displayName: Set QTDIR environment variable
   - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
     displayName: git clone MPC
-  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(TAO_ROOT)/TAO_ACE.mwc -workers 4
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(TAO_ROOT)/TAO_ACE.mwc -workers 4 -use_env
     displayName: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
-  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(ACE_ROOT)/tests/tests.mwc -workers 4
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(ACE_ROOT)/tests/tests.mwc -workers 4 -use_env
     displayName: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
   - bash: make -j 6 -C TAO
     displayName: Build TAO project
