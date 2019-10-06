@@ -304,6 +304,8 @@ jobs:
       'qt5=1' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
       "$(platform_file)" >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
     displayName: Create platform_macros file
+  - powershell: $env:QTDIR = '/usr'
+    displayName: Set QTDIR environment variable
   - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
     displayName: git clone MPC
   - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(TAO_ROOT)/TAO_ACE.mwc -workers 4
@@ -326,6 +328,8 @@ jobs:
   - powershell: |
       'include $(ACE_ROOT)/include/makeinclude/platform_macosx.GNU' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU;
     displayName: Create platform_macros file
+  - powershell: $env:QTDIR = '/usr'
+    displayName: Set QTDIR environment variable
   - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
     displayName: git clone MPC
   - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(TAO_ROOT)/TAO_ACE.mwc -workers 4
