@@ -28,32 +28,32 @@ jobs:
         BuildConfiguration: Debug
         vcpkgarch: x64-windows
         vcpkglibdir: debug\lib
-        vcpkgpackages: 'openssl xerces-c[xmlch_wchar]'
+        vcpkgpackages: 'openssl xerces-c[xmlch_wchar] qt5-base'
         OptionalFeatures: uses_wchar=1
       Debug64:
         BuildPlatform: x64
         BuildConfiguration: Debug
         vcpkgarch: x64-windows
         vcpkglibdir: debug\lib
-        vcpkgpackages: openssl xerces-c
+        vcpkgpackages: openssl xerces-c qt5-base
       Release64:
         BuildPlatform: x64
-        BuildConfiguration: Release
+        BuildConfiguration: Release 
         vcpkgarch: x64-windows
         vcpkglibdir: lib
-        vcpkgpackages: openssl xerces-c
+        vcpkgpackages: openssl xerces-c qt5-base
       Debug32:
         BuildPlatform: Win32
         BuildConfiguration: Debug
         vcpkgarch: x86-windows
         vcpkglibdir: debug\lib
-        vcpkgpackages: openssl xerces-c
+        vcpkgpackages: openssl xerces-c qt5-base
       Release32:
         BuildPlatform: Win32
         BuildConfiguration: Release
         vcpkgarch: x86-windows
         vcpkglibdir: lib
-        vcpkgpackages: openssl xerces-c
+        vcpkgpackages: openssl xerces-c qt5-base
   variables:
     VCPKG_ROOT: $(Build.SourcesDirectory)\vcpkg
     XERCESC_INCDIR: $(VCPKG_ROOT)\installed\$(vcpkgarch)\include
@@ -72,6 +72,7 @@ jobs:
   - powershell: |
       echo "xerces3=1" | out-file -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
       echo "ssl=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
+      echo "qt5=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
       echo "versioned_namespace=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
     displayName: Create default.features file
   - powershell: |
@@ -110,20 +111,20 @@ jobs:
         BuildConfiguration: Debug
         vcpkgarch: x64-windows
         vcpkglibdir: debug\lib
-        vcpkgpackages: 'openssl xerces-c[xmlch_wchar]'
+        vcpkgpackages: 'openssl xerces-c[xmlch_wchar] qt5-base'
         OptionalFeatures: uses_wchar=1
       Debug64:
         BuildPlatform: x64
         BuildConfiguration: Debug
         vcpkgarch: x64-windows
         vcpkglibdir: debug\lib
-        vcpkgpackages: openssl xerces-c
+        vcpkgpackages: openssl xerces-c qt5-base
       Release64:
         BuildPlatform: x64
         BuildConfiguration: Release
         vcpkgarch: x64-windows
         vcpkglibdir: lib
-        vcpkgpackages: openssl xerces-c
+        vcpkgpackages: openssl xerces-c qt5-base
   variables:
     VCPKG_ROOT: $(Build.SourcesDirectory)\vcpkg
     XERCESC_INCDIR: $(VCPKG_ROOT)\installed\$(vcpkgarch)\include
@@ -142,6 +143,7 @@ jobs:
   - powershell: |
       echo "xerces3=1" | out-file -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
       echo "ssl=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
+      echo "qt5=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
       echo "versioned_namespace=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
     displayName: Create default.features file
   - powershell: |
@@ -195,7 +197,7 @@ jobs:
   - powershell: |
       git clone --depth 1 git://github.com/Microsoft/vcpkg.git $(VCPKG_ROOT)
       $(VCPKG_ROOT)\bootstrap-vcpkg.bat
-      $(VCPKG_ROOT)\vcpkg.exe install --recurse --triplet $(vcpkgarch) openssl xerces-c
+      $(VCPKG_ROOT)\vcpkg.exe install --recurse --triplet $(vcpkgarch) openssl xerces-c qt5-base
     displayName: vcpkg
   - powershell: |
       '#include "ace/config-win32.h"' > $(ACE_ROOT)/ace/config.h
@@ -203,6 +205,7 @@ jobs:
   - powershell: |
       echo "xerces3=1" | out-file -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
       echo "ssl=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
+      echo "qt5=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
       echo "versioned_namespace=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
     displayName: Create default.features file
   - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
@@ -284,7 +287,7 @@ jobs:
   - script: |
       sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
       sudo apt-get --yes update
-      sudo apt-get --yes install libxerces-c-dev libssl-dev $(PackageDeps)
+      sudo apt-get --yes install libxerces-c-dev libssl-dev qtbase5-dev $(PackageDeps)
     displayName: install system package dependencies
   - powershell: |
       '#include "ace/config-linux.h"' > $(ACE_ROOT)/ace/config.h
@@ -292,11 +295,13 @@ jobs:
   - powershell: |
       'xerces3=1' > $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
       'ssl=1' >> $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
+      'qt5=1' >> $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
       'versioned_namespace=1' >> $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
     displayName: Create default.features file
   - powershell: |
       'xerces3=1' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
       'ssl=1' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+      'qt5=1' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
       "$(platform_file)" >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
     displayName: Create platform_macros file
   - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
